@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "mcp__supabase__list_tables",
-      "mcp__supabase__list_migrations"
+      "mcp__supabase__list_migrations",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter test)",
+      "Bash(flutter clean:*)",
+      "Bash(flutter pub get:*)"
     ]
   },
   "enableAllProjectMcpServers": true,
