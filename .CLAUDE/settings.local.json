@@ -6,7 +6,9 @@
       "Bash(flutter analyze:*)",
       "Bash(flutter test)",
       "Bash(flutter clean:*)",
-      "Bash(flutter pub get:*)"
+      "Bash(flutter pub get:*)",
+      "mcp__supabase__get_project_url",
+      "mcp__supabase__get_anon_key"
     ]
   },
   "enableAllProjectMcpServers": true,

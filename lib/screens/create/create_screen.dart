@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Create screen - Manage user's story creations
-class CreateScreen extends StatelessWidget {
-  const CreateScreen({super.key});
+/// Créer screen - Gérer les créations de l'utilisateur
+class CreerScreen extends StatelessWidget {
+  const CreerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Create Screen'),
+        child: Text('Créer'),
       ),
     );
   }

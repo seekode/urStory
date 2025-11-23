@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Search screen - Search for stories by name
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+/// Recherche screen - Rechercher des histoires par nom
+class RechercheScreen extends StatelessWidget {
+  const RechercheScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Search Screen'),
+        child: Text('Recherche'),
       ),
     );
   }

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-/// Discover screen - Main landing page
-class DiscoverScreen extends StatelessWidget {
-  const DiscoverScreen({super.key});
+/// Découvrir screen - Page d'accueil principale
+class DecouvrirScreen extends StatelessWidget {
+  const DecouvrirScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Discover Screen'),
+        child: Text('Découvrir'),
       ),
     );
   }

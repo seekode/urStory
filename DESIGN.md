@@ -1,4 +1,4 @@
-# UrStory - Charte Graphique v2
+# UrStory - Charte Graphique
 
 ## 1. Palettes de couleurs
 
@@ -122,11 +122,12 @@
 Design moderne-chaleureux, épuré et accueillant. L'interface doit favoriser la lecture longue et l'immersion narrative tout en restant intuitive pour la création collaborative.
 
 ### Caractéristiques visuelles
-- **Formes** : 
-  - Cartes : 12px border-radius
-  - Boutons : 8px border-radius
-  - Tags/badges : 6px border-radius
-  - Inputs : 8px border-radius
+- **Formes** :
+  - Conteneurs flottants (navbar, modales) : 28px border-radius
+  - Cartes : 16px border-radius
+  - Boutons : 12px border-radius
+  - Tags/badges : 8px border-radius
+  - Inputs : 12px border-radius
 - **Espacement** : 
   - Padding cartes : 16px
   - Spacing entre éléments : 12px (petit), 24px (moyen), 40px (grand)

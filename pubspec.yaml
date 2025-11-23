@@ -35,6 +35,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # Supabase for backend and authentication
+  supabase_flutter: ^2.8.0
+
+  # State management
+  flutter_riverpod: ^2.6.1
+
+  # Routing
+  go_router: ^14.6.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
