@@ -10,11 +10,14 @@ class LibraryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    return Scaffold(
-      backgroundColor: isDark
+    return Container(
+      color: isDark
           ? AppColors.darkBackgroundPrimary
           : AppColors.lightBackgroundPrimary,
-      body: const Center(child: Text('Bibliothèque')),
+      child: const SafeArea(
+        bottom: false,
+        child: Center(child: Text('Bibliothèque')),
+      ),
     );
   }
 }

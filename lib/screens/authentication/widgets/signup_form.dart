@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_constants.dart';
-import '../../../core/widgets/custom_text_field.dart';
-import '../../../core/widgets/custom_button.dart';
+import '../../../core/widgets/ui/inputs/custom_text_field.dart';
+import '../../../core/widgets/ui/buttons/custom_button.dart';
 
 /// Signup form widget
 class SignupForm extends StatelessWidget {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/theme/app_colors.dart';
 
 /// Search screen - Search stories by name
 class SearchScreen extends StatelessWidget {
@@ -6,6 +7,16 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Recherche')));
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Container(
+      color: isDark
+          ? AppColors.darkBackgroundPrimary
+          : AppColors.lightBackgroundPrimary,
+      child: const SafeArea(
+        bottom: false,
+        child: Center(child: Text('Recherche')),
+      ),
+    );
   }
 }

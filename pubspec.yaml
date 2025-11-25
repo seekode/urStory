@@ -45,6 +45,10 @@ dependencies:
   # Routing
   go_router: ^17.0.0
 
+  # Utilities
+  share_plus: ^10.1.4
+  intl: ^0.20.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

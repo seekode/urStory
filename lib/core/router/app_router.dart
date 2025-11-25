@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../models/story.dart';
 import '../../screens/authentication/auth_screen.dart';
 import '../../screens/search/search_screen.dart';
 import '../../screens/discover/discover_screen.dart';
 import '../../screens/library/library_screen.dart';
 import '../../screens/profile/profile_screen.dart';
+import '../../screens/story_detail/story_detail_screen.dart';
 import '../widgets/navigation/navigation_shell.dart';
 
 /// App routes
@@ -14,6 +16,7 @@ class AppRoutes {
   static const String discover = '/discover';
   static const String library = '/library';
   static const String profile = '/profile';
+  static const String storyDetail = '/story';
 }
 
 /// GoRouter configuration
@@ -30,6 +33,30 @@ final router = GoRouter(
           return FadeTransition(opacity: animation, child: child);
         },
       ),
+    ),
+
+    // Story detail route (no bottom navigation)
+    GoRoute(
+      path: AppRoutes.storyDetail,
+      pageBuilder: (context, state) {
+        final story = state.extra as Story;
+        return CustomTransitionPage(
+          key: state.pageKey,
+          child: StoryDetailScreen(story: story),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeOutCubic,
+              )),
+              child: child,
+            );
+          },
+        );
+      },
     ),
 
     // Shell route with persistent bottom navigation
