@@ -63,11 +63,15 @@ class CustomTextField extends StatelessWidget {
             : AppColors.lightSurfaceElevated,
         labelStyle: TextStyle(
           fontSize: 15,
-          color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+          color: isDark
+              ? AppColors.darkTextSecondary
+              : AppColors.lightTextSecondary,
         ),
         hintStyle: TextStyle(
           fontSize: 15,
-          color: isDark ? AppColors.darkTextTertiary : AppColors.lightTextTertiary,
+          color: isDark
+              ? AppColors.darkTextTertiary
+              : AppColors.lightTextTertiary,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
@@ -98,17 +102,11 @@ class CustomTextField extends StatelessWidget {
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1,
-          ),
+          borderSide: const BorderSide(color: Colors.red, width: 1),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 2,
-          ),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
         ),
         contentPadding: const EdgeInsets.symmetric(
           horizontal: AppConstants.inputPaddingHorizontal,

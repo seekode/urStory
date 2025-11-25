@@ -30,13 +30,14 @@ class LoginForm extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      key: const ValueKey('login'),
       color: isDark
           ? AppColors.darkBackgroundPrimary
           : AppColors.lightBackgroundPrimary,
       child: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: AppConstants.marginMobile),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppConstants.marginMobile,
+          ),
           child: Form(
             key: formKey,
             child: Column(

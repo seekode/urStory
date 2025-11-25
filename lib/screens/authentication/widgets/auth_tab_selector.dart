@@ -87,7 +87,9 @@ class _AuthTab extends StatelessWidget {
                       color: isDark
                           ? AppColors.darkSurfaceElevated
                           : AppColors.lightSurfaceElevated,
-                      borderRadius: BorderRadius.circular(AppConstants.borderRadiusTab),
+                      borderRadius: BorderRadius.circular(
+                        AppConstants.borderRadiusTab,
+                      ),
                       boxShadow: isDark
                           ? AppConstants.shadowDarkLight
                           : AppConstants.shadowLight,
@@ -98,7 +100,9 @@ class _AuthTab extends StatelessWidget {
             ),
             // Text always visible
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppConstants.spacing - 2),
+              padding: const EdgeInsets.symmetric(
+                vertical: AppConstants.spacing - 2,
+              ),
               child: AnimatedDefaultTextStyle(
                 duration: AppConstants.durationStandard,
                 curve: Curves.easeOut,
@@ -107,16 +111,13 @@ class _AuthTab extends StatelessWidget {
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                   color: isSelected
                       ? (isDark
-                          ? AppColors.darkTextPrimary
-                          : AppColors.lightTextPrimary)
+                            ? AppColors.darkTextPrimary
+                            : AppColors.lightTextPrimary)
                       : (isDark
-                          ? AppColors.darkTextTertiary
-                          : AppColors.lightTextTertiary),
+                            ? AppColors.darkTextTertiary
+                            : AppColors.lightTextTertiary),
                 ),
-                child: Text(
-                  label,
-                  textAlign: TextAlign.center,
-                ),
+                child: Text(label, textAlign: TextAlign.center),
               ),
             ),
           ],

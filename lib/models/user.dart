@@ -1,34 +1,34 @@
-/// App user model
-class AppUser {
+/// User model
+class User {
   final String id;
   final String email;
-  final String? username;
+  final String username;
   final bool isAdmin;
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  const AppUser({
+  const User({
     required this.id,
     required this.email,
-    this.username,
+    required this.username,
     this.isAdmin = false,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  /// Create AppUser from JSON
-  factory AppUser.fromJson(Map<String, dynamic> json) {
-    return AppUser(
+  /// Create User from Supabase profile JSON
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       id: json['id'] as String,
       email: json['email'] as String,
-      username: json['username'] as String?,
+      username: json['username'] as String,
       isAdmin: json['is_admin'] as bool? ?? false,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
     );
   }
 
-  /// Convert AppUser to JSON
+  /// Convert User to JSON
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -41,7 +41,7 @@ class AppUser {
   }
 
   /// Copy with
-  AppUser copyWith({
+  User copyWith({
     String? id,
     String? email,
     String? username,
@@ -49,7 +49,7 @@ class AppUser {
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
-    return AppUser(
+    return User(
       id: id ?? this.id,
       email: email ?? this.email,
       username: username ?? this.username,
@@ -63,7 +63,7 @@ class AppUser {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is AppUser && other.id == id;
+    return other is User && other.id == id;
   }
 
   @override

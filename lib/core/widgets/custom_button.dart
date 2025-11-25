@@ -3,12 +3,7 @@ import '../theme/app_colors.dart';
 import '../theme/app_constants.dart';
 
 /// Button variant types
-enum ButtonVariant {
-  primary,
-  secondary,
-  outlined,
-  text,
-}
+enum ButtonVariant { primary, secondary, outlined, text }
 
 /// Custom button with consistent styling across the app
 class CustomButton extends StatelessWidget {
@@ -89,7 +84,11 @@ class CustomButton extends StatelessWidget {
           foregroundColor: textColor,
           disabledBackgroundColor: backgroundColor.withValues(alpha: 0.6),
           disabledForegroundColor: textColor.withValues(alpha: 0.6),
-          elevation: variant == ButtonVariant.primary || variant == ButtonVariant.secondary ? 0 : 0,
+          elevation:
+              variant == ButtonVariant.primary ||
+                  variant == ButtonVariant.secondary
+              ? 0
+              : 0,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
@@ -97,10 +96,12 @@ class CustomButton extends StatelessWidget {
                 ? BorderSide(color: borderColor, width: 1.5)
                 : BorderSide.none,
           ),
-          padding: padding ?? const EdgeInsets.symmetric(
-            horizontal: AppConstants.spacing + 8,
-            vertical: AppConstants.spacingMd,
-          ),
+          padding:
+              padding ??
+              const EdgeInsets.symmetric(
+                horizontal: AppConstants.spacing + 8,
+                vertical: AppConstants.spacingMd,
+              ),
         ),
         child: isLoading
             ? SizedBox(
@@ -112,23 +113,13 @@ class CustomButton extends StatelessWidget {
                 ),
               )
             : icon != null
-                ? Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(icon, size: AppConstants.iconSizeSmall),
-                      const SizedBox(width: AppConstants.spacingSm),
-                      Text(
-                        text,
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          letterSpacing: 0.3,
-                        ),
-                      ),
-                    ],
-                  )
-                : Text(
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(icon, size: AppConstants.iconSizeSmall),
+                  const SizedBox(width: AppConstants.spacingSm),
+                  Text(
                     text,
                     style: const TextStyle(
                       fontSize: 15,
@@ -136,6 +127,16 @@ class CustomButton extends StatelessWidget {
                       letterSpacing: 0.3,
                     ),
                   ),
+                ],
+              )
+            : Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: 0.3,
+                ),
+              ),
       ),
     );
   }

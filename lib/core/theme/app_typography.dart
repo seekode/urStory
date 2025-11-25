@@ -7,7 +7,8 @@ class AppTypography {
   AppTypography._();
 
   // Base font families
-  static const String headingFont = 'SF Pro Display'; // Fallback to system sans-serif
+  static const String headingFont =
+      'SF Pro Display'; // Fallback to system sans-serif
   static const String bodyFont = 'Georgia'; // Fallback to system serif
 
   /// Generate TextTheme for the app

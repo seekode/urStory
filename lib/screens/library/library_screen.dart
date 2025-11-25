@@ -1,35 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../providers/auth_provider.dart';
+import '../../core/theme/app_colors.dart';
 
-/// Bibliothèque screen - Voir les lectures en cours
-class BibliothequeScreen extends ConsumerWidget {
-  const BibliothequeScreen({super.key});
+/// Library screen - View ongoing readings
+class LibraryScreen extends ConsumerWidget {
+  const LibraryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text('Bibliothèque'),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                final authService = ref.read(authServiceProvider);
-                await authService.signOut();
-                if (context.mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Déconnecté avec succès')),
-                  );
-                }
-              },
-              child: const Text('Se déconnecter'),
-            ),
-          ],
-        ),
-      ),
+      backgroundColor: isDark
+          ? AppColors.darkBackgroundPrimary
+          : AppColors.lightBackgroundPrimary,
+      body: const Center(child: Text('Bibliothèque')),
     );
   }
 }

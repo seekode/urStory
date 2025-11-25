@@ -70,57 +70,57 @@ class AppConstants {
 
   /// Light shadow for subtle elevation (cards, buttons)
   static List<BoxShadow> get shadowLight => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.06),
-          blurRadius: 3,
-          offset: const Offset(0, 1),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.06),
+      blurRadius: 3,
+      offset: const Offset(0, 1),
+    ),
+  ];
 
   /// Medium shadow for moderate elevation (modals, dropdowns)
   static List<BoxShadow> get shadowMedium => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.08),
-          blurRadius: 8,
-          offset: const Offset(0, 2),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.08),
+      blurRadius: 8,
+      offset: const Offset(0, 2),
+    ),
+  ];
 
   /// Strong shadow for high elevation (floating elements, dialogs)
   static List<BoxShadow> get shadowStrong => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.12),
-          blurRadius: 16,
-          offset: const Offset(0, 4),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.12),
+      blurRadius: 16,
+      offset: const Offset(0, 4),
+    ),
+  ];
 
   /// Shadow for dark mode - light variant
   static List<BoxShadow> get shadowDarkLight => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.15),
-          blurRadius: 4,
-          offset: const Offset(0, 2),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.15),
+      blurRadius: 4,
+      offset: const Offset(0, 2),
+    ),
+  ];
 
   /// Shadow for dark mode - medium variant
   static List<BoxShadow> get shadowDarkMedium => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.25),
-          blurRadius: 12,
-          offset: const Offset(0, 3),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.25),
+      blurRadius: 12,
+      offset: const Offset(0, 3),
+    ),
+  ];
 
   /// Shadow for dark mode - strong variant
   static List<BoxShadow> get shadowDarkStrong => [
-        BoxShadow(
-          color: Colors.black.withValues(alpha: 0.35),
-          blurRadius: 20,
-          offset: const Offset(0, 6),
-        ),
-      ];
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.35),
+      blurRadius: 20,
+      offset: const Offset(0, 6),
+    ),
+  ];
 
   // ═══════════════════════════════════════════════════════════════════════════
   // Animation Durations

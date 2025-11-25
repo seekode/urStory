@@ -1,74 +1,90 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
 import '../models/user.dart';
 
-/// Authentication service
+/// Authentication service - Handles all Supabase auth operations
 class AuthService {
-  final SupabaseClient _client;
+  final supabase.SupabaseClient _client;
 
   AuthService(this._client);
 
-  /// Get current authenticated user
-  AppUser? get currentUser {
-    final authUser = _client.auth.currentUser;
-    if (authUser == null) return null;
+  /// Stream of auth state changes with full user profile
+  /// Filters out token refresh events to avoid unnecessary profile fetches
+  Stream<User?> get authStateChanges {
+    return _client.auth.onAuthStateChange
+        .where(
+          (event) => event.event != supabase.AuthChangeEvent.tokenRefreshed,
+        )
+        .asyncMap((event) async {
+          final user = event.session?.user;
+          if (user == null) return null;
 
-    return AppUser(
-      id: authUser.id,
-      email: authUser.email!,
-      username: authUser.userMetadata?['username'] as String?,
-      isAdmin: false,
-      createdAt: DateTime.parse(authUser.createdAt),
-      updatedAt: DateTime.now(),
-    );
+          // Fetch full profile from database
+          return await getCurrentUser();
+        });
+  }
+
+  /// Get current authenticated user with full profile data
+  Future<User?> getCurrentUser() async {
+    final supabaseUser = _client.auth.currentUser;
+    if (supabaseUser == null) return null;
+
+    try {
+      // Fetch full profile from profiles table
+      final profileData = await _client
+          .from('profiles')
+          .select()
+          .eq('id', supabaseUser.id)
+          .single();
+
+      return User.fromJson(profileData);
+    } catch (e) {
+      // If profile doesn't exist yet, return null
+      return null;
+    }
   }
 
   /// Check if user is authenticated
   bool get isAuthenticated => _client.auth.currentUser != null;
 
-  /// Auth state stream
-  Stream<bool> get authStateChanges {
-    return _client.auth.onAuthStateChange.map((event) {
-      return event.session != null;
-    });
-  }
-
   /// Sign up with email and password
-  Future<AppUser> signUp({
+  Future<User> signUp({
     required String email,
     required String password,
-    String? username,
+    required String username,
   }) async {
     try {
+      // 1. Create auth user
       final response = await _client.auth.signUp(
         email: email,
         password: password,
-        data: username != null ? {'username': username} : null,
       );
 
       if (response.user == null) {
-        throw Exception('Inscription échouée');
+        throw supabase.AuthException('Inscription échouée');
       }
 
-      return AppUser(
-        id: response.user!.id,
-        email: response.user!.email!,
-        username: username,
-        isAdmin: false,
-        createdAt: DateTime.parse(response.user!.createdAt),
-        updatedAt: DateTime.now(),
-      );
-    } on AuthException catch (e) {
-      throw Exception(_getAuthErrorMessage(e.message));
+      // 2. Create profile in profiles table
+      final profileData = {
+        'id': response.user!.id,
+        'email': email,
+        'username': username,
+        'created_at': DateTime.now().toIso8601String(),
+        'updated_at': DateTime.now().toIso8601String(),
+      };
+
+      await _client.from('profiles').insert(profileData);
+
+      // 3. Return user with profile data
+      return User.fromJson(profileData);
+    } on supabase.AuthException catch (e) {
+      throw supabase.AuthException(_getReadableErrorMessage(e.message));
     } catch (e) {
-      throw Exception('Erreur lors de l\'inscription: $e');
+      throw supabase.AuthException('Erreur lors de l\'inscription: $e');
     }
   }
 
   /// Sign in with email and password
-  Future<AppUser> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<User> signIn({required String email, required String password}) async {
     try {
       final response = await _client.auth.signInWithPassword(
         email: email,
@@ -76,21 +92,21 @@ class AuthService {
       );
 
       if (response.user == null) {
-        throw Exception('Connexion échouée');
+        throw supabase.AuthException('Connexion échouée');
       }
 
-      return AppUser(
-        id: response.user!.id,
-        email: response.user!.email!,
-        username: response.user!.userMetadata?['username'] as String?,
-        isAdmin: false,
-        createdAt: DateTime.parse(response.user!.createdAt),
-        updatedAt: DateTime.now(),
-      );
-    } on AuthException catch (e) {
-      throw Exception(_getAuthErrorMessage(e.message));
+      // Fetch full profile from database
+      final profileData = await _client
+          .from('profiles')
+          .select()
+          .eq('id', response.user!.id)
+          .single();
+
+      return User.fromJson(profileData);
+    } on supabase.AuthException catch (e) {
+      throw supabase.AuthException(_getReadableErrorMessage(e.message));
     } catch (e) {
-      throw Exception('Erreur lors de la connexion: $e');
+      throw supabase.AuthException('Erreur lors de la connexion: $e');
     }
   }
 
@@ -99,7 +115,7 @@ class AuthService {
     try {
       await _client.auth.signOut();
     } catch (e) {
-      throw Exception('Erreur lors de la déconnexion: $e');
+      throw supabase.AuthException('Erreur lors de la déconnexion: $e');
     }
   }
 
@@ -107,24 +123,34 @@ class AuthService {
   Future<void> resetPassword(String email) async {
     try {
       await _client.auth.resetPasswordForEmail(email);
-    } on AuthException catch (e) {
-      throw Exception(_getAuthErrorMessage(e.message));
+    } on supabase.AuthException catch (e) {
+      throw supabase.AuthException(_getReadableErrorMessage(e.message));
     } catch (e) {
-      throw Exception('Erreur lors de la réinitialisation: $e');
+      throw supabase.AuthException('Erreur lors de la réinitialisation: $e');
     }
   }
 
-  /// Get user-friendly error messages
-  String _getAuthErrorMessage(String message) {
+  /// Convert Supabase error messages to user-friendly French messages
+  String _getReadableErrorMessage(String message) {
     if (message.contains('Invalid login credentials')) {
       return 'Email ou mot de passe incorrect';
-    } else if (message.contains('User already registered')) {
+    }
+    if (message.contains('User already registered')) {
       return 'Cet email est déjà utilisé';
-    } else if (message.contains('Email not confirmed')) {
+    }
+    if (message.contains('Email not confirmed')) {
       return 'Veuillez confirmer votre email';
-    } else if (message.contains('Password should be at least')) {
+    }
+    if (message.contains('Password should be at least')) {
       return 'Le mot de passe doit contenir au moins 6 caractères';
     }
+    if (message.contains('Unable to validate email address')) {
+      return 'Adresse email invalide';
+    }
+    if (message.contains('Email rate limit exceeded')) {
+      return 'Trop de tentatives. Veuillez réessayer plus tard';
+    }
+
     return message;
   }
 }

@@ -38,13 +38,14 @@ class SignupForm extends StatelessWidget {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Container(
-      key: const ValueKey('signup'),
       color: isDark
           ? AppColors.darkBackgroundPrimary
           : AppColors.lightBackgroundPrimary,
       child: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: AppConstants.marginMobile),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppConstants.marginMobile,
+          ),
           child: Form(
             key: formKey,
             child: Column(
@@ -74,8 +75,17 @@ class SignupForm extends StatelessWidget {
                 const SizedBox(height: AppConstants.spacingXl),
                 CustomTextField(
                   controller: usernameController,
-                  label: 'Nom d\'utilisateur (optionnel)',
+                  label: 'Nom d\'utilisateur',
                   hint: 'JohnDoe',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Veuillez entrer un nom d\'utilisateur';
+                    }
+                    if (value.length < 3) {
+                      return 'Le nom d\'utilisateur doit contenir au moins 3 caractères';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: AppConstants.spacing),
                 CustomTextField(
