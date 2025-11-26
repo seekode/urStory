@@ -46,8 +46,12 @@ dependencies:
   go_router: ^17.0.0
 
   # Utilities
-  share_plus: ^10.1.4
+  share_plus: ^12.0.1
   intl: ^0.20.2
+
+  # Code generation annotations
+  freezed_annotation: ^3.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +67,8 @@ dev_dependencies:
   # Code generation
   build_runner: ^2.4.15
   riverpod_generator: ^3.0.3
+  freezed: ^3.0.0
+  json_serializable: ^6.9.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

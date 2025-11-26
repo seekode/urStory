@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_constants.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_constants.dart';
 
 /// Category card widget for horizontal scrollable list
 class CategoryCard extends StatelessWidget {
   const CategoryCard({
     super.key,
     required this.title,
-    required this.imageUrl,
+    this.imageUrl,
     this.onTap,
   });
 
   final String title;
-  final String imageUrl;
+  final String? imageUrl;
   final VoidCallback? onTap;
 
   @override
@@ -36,21 +36,14 @@ class CategoryCard extends StatelessWidget {
             fit: StackFit.expand,
             children: [
               // Background image
-              Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => Container(
-                  color: isDark
-                      ? AppColors.darkSurfaceSecondary
-                      : AppColors.lightSurfaceSecondary,
-                  child: Icon(
-                    Icons.image_outlined,
-                    color: isDark
-                        ? AppColors.darkTextTertiary
-                        : AppColors.lightTextTertiary,
-                  ),
-                ),
-              ),
+              if (imageUrl != null && imageUrl!.isNotEmpty)
+                Image.network(
+                  imageUrl!,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => _buildPlaceholder(isDark),
+                )
+              else
+                _buildPlaceholder(isDark),
               // Gradient overlay
               Container(
                 decoration: BoxDecoration(
@@ -83,6 +76,20 @@ class CategoryCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildPlaceholder(bool isDark) {
+    return Container(
+      color: isDark
+          ? AppColors.darkSurfaceSecondary
+          : AppColors.lightSurfaceSecondary,
+      child: Icon(
+        Icons.image_outlined,
+        color: isDark
+            ? AppColors.darkTextTertiary
+            : AppColors.lightTextTertiary,
       ),
     );
   }

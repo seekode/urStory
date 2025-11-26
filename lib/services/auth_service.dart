@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart' as supabase;
-import '../models/user.dart';
+
+import '../models/user/user.dart';
 
 /// Authentication service - Handles all Supabase auth operations
 class AuthService {

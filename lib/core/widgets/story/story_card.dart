@@ -8,7 +8,7 @@ class StoryCard extends StatelessWidget {
   const StoryCard({
     super.key,
     required this.title,
-    required this.coverUrl,
+    this.coverUrl,
     required this.likes,
     required this.reads,
     required this.chapters,
@@ -16,7 +16,7 @@ class StoryCard extends StatelessWidget {
   });
 
   final String title;
-  final String coverUrl;
+  final String? coverUrl;
   final int likes;
   final int reads;
   final int chapters;
@@ -47,22 +47,14 @@ class StoryCard extends StatelessWidget {
               ),
               child: AspectRatio(
                 aspectRatio: 3 / 4,
-                child: Image.network(
-                  coverUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Container(
-                    color: isDark
-                        ? AppColors.darkSurfaceSecondary
-                        : AppColors.lightSurfaceSecondary,
-                    child: Icon(
-                      Icons.auto_stories_outlined,
-                      color: isDark
-                          ? AppColors.darkTextTertiary
-                          : AppColors.lightTextTertiary,
-                      size: AppConstants.iconSizeLarge,
-                    ),
-                  ),
-                ),
+                child: coverUrl != null && coverUrl!.isNotEmpty
+                    ? Image.network(
+                        coverUrl!,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            _buildPlaceholder(isDark),
+                      )
+                    : _buildPlaceholder(isDark),
               ),
             ),
             // Content
@@ -126,6 +118,21 @@ class StoryCard extends StatelessWidget {
       return '${(number / 1000).toStringAsFixed(1)}K';
     }
     return number.toString();
+  }
+
+  Widget _buildPlaceholder(bool isDark) {
+    return Container(
+      color: isDark
+          ? AppColors.darkSurfaceSecondary
+          : AppColors.lightSurfaceSecondary,
+      child: Icon(
+        Icons.auto_stories_outlined,
+        color: isDark
+            ? AppColors.darkTextTertiary
+            : AppColors.lightTextTertiary,
+        size: AppConstants.iconSizeLarge,
+      ),
+    );
   }
 }
 

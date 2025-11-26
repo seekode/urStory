@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../models/user.dart';
-import '../services/auth_service.dart';
-import 'supabase_provider.dart';
+
+import '../../models/user/user.dart';
+import '../../services/auth_service.dart';
+import '../supabase_provider.dart';
 
 part 'auth_provider.g.dart';
 

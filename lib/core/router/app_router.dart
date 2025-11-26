@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../models/story.dart';
+import '../../models/story/story_details.dart';
 import '../../screens/authentication/auth_screen.dart';
 import '../../screens/search/search_screen.dart';
 import '../../screens/discover/discover_screen.dart';
@@ -39,10 +39,10 @@ final router = GoRouter(
     GoRoute(
       path: AppRoutes.storyDetail,
       pageBuilder: (context, state) {
-        final story = state.extra as Story;
+        final storyDetails = state.extra as StoryDetails;
         return CustomTransitionPage(
           key: state.pageKey,
-          child: StoryDetailScreen(story: story),
+          child: StoryDetailScreen(storyDetails: storyDetails),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SlideTransition(
               position: Tween<Offset>(

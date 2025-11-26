@@ -4,15 +4,15 @@ import '../../core/router/app_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_constants.dart';
 import '../../core/widgets/ui/buttons/custom_button.dart';
-import '../../models/story.dart';
+import '../../models/story/story_details.dart';
 import 'widgets/story_genres_row.dart';
 import 'widgets/story_info_row.dart';
 
 /// Story detail screen - Shows full story information
 class StoryDetailScreen extends ConsumerWidget {
-  final Story story;
+  final StoryDetails storyDetails;
 
-  const StoryDetailScreen({super.key, required this.story});
+  const StoryDetailScreen({super.key, required this.storyDetails});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -41,9 +41,10 @@ class StoryDetailScreen extends ConsumerWidget {
                     SizedBox(
                       height: imageHeight,
                       width: screenWidth,
-                      child: story.coverUrl.isNotEmpty
+                      child: storyDetails.coverUrl != null &&
+                              storyDetails.coverUrl!.isNotEmpty
                           ? Image.network(
-                              story.coverUrl,
+                              storyDetails.coverUrl!,
                               width: screenWidth,
                               fit: BoxFit.cover,
                               alignment: Alignment.topCenter,
@@ -104,7 +105,7 @@ class StoryDetailScreen extends ConsumerWidget {
                           children: [
                             // Title
                             Text(
-                              story.title,
+                              storyDetails.title,
                               style: TextStyle(
                                 color: isDark
                                     ? AppColors.darkTextPrimary
@@ -119,7 +120,7 @@ class StoryDetailScreen extends ConsumerWidget {
 
                             // Author
                             Text(
-                              'par ${story.authorName}',
+                              'par ${storyDetails.authorName}',
                               style: TextStyle(
                                 color: isDark
                                     ? AppColors.darkAccentPrimary
@@ -131,14 +132,18 @@ class StoryDetailScreen extends ConsumerWidget {
                             const SizedBox(height: AppConstants.spacingMd),
 
                             // Genres row
-                            StoryGenresRow(genres: story.genres),
+                            StoryGenresRow(
+                              genres: storyDetails.genres
+                                  .map((g) => g.name)
+                                  .toList(),
+                            ),
                             const SizedBox(height: AppConstants.spacingLg),
 
                             // Info row (likes, views, chapters)
                             StoryInfoRow(
-                              likes: story.likes,
-                              views: story.views,
-                              chapters: story.chapters,
+                              likes: storyDetails.totalLikes,
+                              views: storyDetails.totalViews,
+                              chapters: storyDetails.totalChapters,
                             ),
 
                             // Divider
@@ -156,8 +161,8 @@ class StoryDetailScreen extends ConsumerWidget {
 
                             // Summary
                             Text(
-                              story.summary.isNotEmpty
-                                  ? story.summary
+                              storyDetails.summary?.isNotEmpty == true
+                                  ? storyDetails.summary!
                                   : 'Aucun résumé disponible.',
                               style: TextStyle(
                                 color: isDark
